@@ -1,0 +1,215 @@
+.createPollPage{
+  width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.createCard{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.158) 0px 2px 3px;
+  background-color: #FAFAFA;
+  margin-top: 10vh;
+  align-items: center;
+  width: 400px;
+  font-family: 'Poppins', sans-serif;
+}
+
+@media only screen and (max-width: 500px){
+  .createPollPage{
+    width: 100%;
+    height: 100vh;
+  }
+  .createCard{
+    width: 100%;
+    margin-top: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.cardTitle{
+  font-size: 30px;
+  font-weight: 600;
+  color: #1ECE30;
+  padding-bottom: 20px;
+}
+
+.cardQuestion{
+  width: 100%;
+}
+
+.cardQuestionInput{
+  width: 100%;
+  font-size: 20px;
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  background-color: #EEEEEE;
+  border-bottom: #1ECE30 5px solid;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.cardOption{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #EEEEEE;
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+.optionCircle{
+  cursor: pointer;
+  margin: 0px 10px;
+  width: 12px;
+  height: 12px;
+  background-color: #1ECE30;
+  border-radius: 50%;
+}
+
+
+.cardOptionContainer{
+  flex: 1;
+}
+
+.cardOptionInput{
+  width: 100%;
+  font-size: 18px;
+  padding: 10px 10px 10px 0px;
+  outline: none;
+  border: none;
+  background-color: #EEEEEE;
+  font-family: 'Poppins', sans-serif;
+}
+
+.createPollActions{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.optionAddBtn{
+  cursor: pointer;
+  height: 36px;
+  width: 36px;
+  background-color: #1ECE30;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.createBtn{
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background-color: #1ECE30;
+  color: white;
+  border-radius: 2px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+}
+
+.viewPollBtn{
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background-color: #1ECE30;
+  color: white;
+  border-radius: 2px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+}
+
+.linkOuterContainer{
+  margin-top: 20px;
+  width: 100%;
+  background-color: rgb(224, 224, 224);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.linkOuterContainer span{
+  font-weight: bold;
+}
+
+.linkInnerContainer{
+  margin-top: 5px;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+  overflow: scroll;
+}
+
+.shareCopyButtonContainer{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.copyBtn{
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 5px;
+  border: #1ECE30 2px solid;
+}
+
+.spinnerContainer{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 2px 20px;
+}
+
+.ldsRing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+.ldsRing div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #ffffff transparent transparent transparent;
+}
+.ldsRing div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.ldsRing div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.ldsRing div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

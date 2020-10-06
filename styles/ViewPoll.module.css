@@ -1,0 +1,202 @@
+.pollCardContainer{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.pollCard{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.158) 0px 2px 3px;
+  background-color: #FAFAFA;
+  margin-top: 10vh;
+  align-items: center;
+  width: 400px;
+}
+
+.pollCard div{
+  width: 100%;
+}
+
+@media only screen and (max-width: 500px){
+  .pollCard{
+    margin-top: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
+.cardTitle{
+  font-size: 30px;
+  font-weight: 600;
+  color: #1ECE30;
+  padding-bottom: 20px;
+}
+
+.cardQuestion{
+  width: 100%;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.optionBarViewContainer{
+  width: 100%;
+  height: 46px;
+  background-color: #eeeeee;
+  margin-bottom: 10px;
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+}
+
+.optionBarFill{
+  height: 100%;
+  border-radius: 2px;
+  font-size: 18px;
+  transition: all 1s ease;
+}
+
+.optionBarContents{
+  background-color: transparent;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.optionVotesCountText{
+  color: rgb(66, 66, 66);
+}
+
+.pollStatus{
+  display: flex;
+  width: 100%;
+}
+
+.totalVoteCount{
+  color: #313131;
+}
+
+.spinnerContainer{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.ldsRing {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 80px;
+}
+.ldsRing div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin: 8px;
+  border: 4px solid #1ECE30;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #1ECE30 transparent transparent transparent;
+}
+.ldsRing div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.ldsRing div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.ldsRing div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+.cardOption{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #EEEEEE;
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+.optionCircle{
+  cursor: pointer;
+  margin: 0px 10px;
+  width: 12px;
+  height: 12px;
+  background-color: #1ECE30;
+  border-radius: 50%;
+}
+
+
+.cardOptionContainer{
+  flex: 1;
+}
+
+.cardOptionInput{
+  width: 100%;
+  font-size: 18px;
+  padding: 10px 10px 10px 0px;
+  outline: none;
+  border: none;
+  background-color: #EEEEEE;
+  font-family: 'Poppins', sans-serif;
+}
+
+.createPollActions{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.optionAddBtn{
+  cursor: pointer;
+  height: 36px;
+  width: 36px;
+  background-color: #1ECE30;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.createBtn{
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background-color: #1ECE30;
+  color: white;
+  border-radius: 2px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+}
