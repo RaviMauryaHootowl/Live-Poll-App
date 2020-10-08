@@ -13,6 +13,7 @@ const ViewPoll = () => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [totalVote, setTotalVote] = useState<number>(0);
 
+
   const setVote = (voteIndex) => {
     const requestOptions = {
       method: 'GET'
@@ -23,6 +24,7 @@ const ViewPoll = () => {
       setIsVoted(true);
       setSelectedIndex(voteIndex);
       setDataAfterFetch(data);
+      localStorage.setItem(`${pollid}`, voteIndex);
     })
   }
 
@@ -37,6 +39,10 @@ const ViewPoll = () => {
       .then(res => res.json())
       .then(data => {
         setDataAfterFetch(data);
+        if(localStorage.getItem(`${pollid}`)){
+          setIsVoted(true);
+          setSelectedIndex(parseInt(localStorage.getItem(`${pollid}`)));
+        }
         setIsLoading(false);
       }).catch((error) => {
         alert("This poll doesn't exists.");
