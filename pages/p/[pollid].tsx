@@ -4,17 +4,22 @@ import { useRouter } from 'next/router';
 
 const ViewPoll = () => {
   const router = useRouter();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isVoting, setIsVoting] = useState<boolean>(false);
   const { pollid } = router.query;
   const [isVoted, setIsVoted] = useState<boolean>(false);
 
   const [question, setQuestion] = useState<string>("");
   const [options, setOptions] = useState([]);
+  const [tappedIndex, setTappedIndex] = useState<number>(0);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [totalVote, setTotalVote] = useState<number>(0);
 
 
   const setVote = (voteIndex) => {
+    setTappedIndex(voteIndex);
+    setIsVoting(true);
     const requestOptions = {
       method: 'GET'
     };
@@ -25,6 +30,7 @@ const ViewPoll = () => {
       setSelectedIndex(voteIndex);
       setDataAfterFetch(data);
       localStorage.setItem(`${pollid}`, voteIndex);
+      setIsVoting(false);
     })
   }
 
@@ -75,14 +81,14 @@ const ViewPoll = () => {
         <span className={styles.cardTitle}>Quick Polls</span>
         {
           (!isLoading) ? 
-          <div>
+          <div className={styles.pollCardInnerDiv}>
             <div className={styles.cardQuestion}>
               <span className={styles.cardQuestionSpan}>{question}</span>
             </div>
 
             {
               options.map((_, index) => {
-                return <OptionBarView key={index} index={index} selectedIndex={selectedIndex} optionName={options[index]} isVoted={isVoted} setVote={setVote}/>
+                return <OptionBarView key={index} index={index} selectedIndex={selectedIndex} optionName={options[index]} isVoted={isVoted} setVote={setVote} isVoting={isVoting} tappedIndex={tappedIndex}/>
               })
             }
             {/* <div className={styles.createPollActions}>
@@ -102,23 +108,62 @@ const ViewPoll = () => {
   );
 }
 
-const OptionBarView = ({optionName, index, selectedIndex,  isVoted, setVote}) => {
+const OptionBarView = ({optionName, index, selectedIndex,  isVoted, setVote, isVoting, tappedIndex}) => {
+
 
   const optionBarFillStyle = {
     width : `${(isVoted) ? optionName['percent'] : 0}%`,
     backgroundColor : (index==selectedIndex) ? "#1ECE30" : "#c5c5c5"
   };
 
+  const voteCountDisplay = () => {
+    if(isVoting && index == tappedIndex){
+      return (
+        Loader(20, 3, "#1ECE30")
+      );
+    }
+    if(isVoted){
+      return (<span className={styles.optionVotesCountText}>{optionName['votings'].length}</span>);
+    }else{
+      return (<span>?</span>);
+    }
+  }
+
   return (
     <div onClick={() => {
         if(!isVoted){setVote(index)}
-      }} className={styles.optionBarViewContainer}>
-        <div style={optionBarFillStyle} className={styles.optionBarFill}></div>
+      }} className={styles.optionBarViewContainer} >
+        
         <div className={styles.optionBarContents}>
           <span className={styles.optionNameText}>{optionName['optionName']}</span>
-          {(isVoted) ? <span className={styles.optionVotesCountText}>{optionName['votings'].length}</span> : <span>?</span>}
+          {voteCountDisplay()}
         </div>
+        <div style={optionBarFillStyle} className={styles.optionBarFill}></div>
     </div>
+  );
+}
+
+const Loader = (size: number, border : number, color : string) => {
+
+  const customLoaderStyle = {
+    width : `${size}px`,
+    height : `${size}px`,
+  };
+
+  const customLoaderCirclesStyle = {
+    width : `${size}px`,
+    height : `${size}px`,
+    border: `${border}px solid ${color}`,
+    borderColor: `${color} transparent transparent transparent`
+  };
+
+  return (
+    <div style={customLoaderStyle} className={styles.customLdsRing}>
+      <div style={customLoaderCirclesStyle}></div>
+      <div style={customLoaderCirclesStyle}></div>
+      <div style={customLoaderCirclesStyle}></div>
+    </div>
+    
   );
 }
 

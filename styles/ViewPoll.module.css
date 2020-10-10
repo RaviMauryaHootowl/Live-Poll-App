@@ -19,7 +19,7 @@
   width: 400px;
 }
 
-.pollCard div{
+.pollCardInnerDiv{
   width: 100%;
 }
 
@@ -49,34 +49,29 @@
 
 .optionBarViewContainer{
   width: 100%;
-  height: 46px;
   background-color: #eeeeee;
   margin-bottom: 10px;
   border-radius: 2px;
   position: relative;
   cursor: pointer;
+  white-space: pre-wrap;
+  z-index: 10;
 }
 
-.optionBarFill{
-  height: 100%;
-  border-radius: 2px;
-  font-size: 18px;
-  transition: all 1s ease;
-}
 
 .optionBarContents{
+  z-index: 2;
   background-color: transparent;
   width: 100%;
   padding: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
 }
 
 .optionVotesCountText{
+  padding: 0 10px;
   color: rgb(66, 66, 66);
 }
 
@@ -88,6 +83,52 @@
 .totalVoteCount{
   color: #313131;
 }
+
+.optionBarFill{
+  z-index: 0;
+  width: 20%;
+  height: 100%;
+  border-radius: 2px;
+  font-size: 18px;
+  transition: all 1s ease;
+  position: absolute;
+  background-color: #1ECE30;
+  top: 0;
+  left: 0;
+}
+
+.customLdsRing {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.customLdsRing div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  margin: 1px;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+.customLdsRing div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.customLdsRing div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.customLdsRing div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 
 .spinnerContainer{
   width: 100%;

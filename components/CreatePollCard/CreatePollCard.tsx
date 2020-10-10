@@ -8,6 +8,7 @@ const CreatePollCard = () => {
   const [options, setOptions] = useState(["", ""]);
   const [isCreating, setIsCreating] = useState<boolean>(false);
   const [fetchedLink, setFetchedLink] = useState<string>("");
+  const hostURL = "https://quicklivepoll.vercel.app"
 
   // set all options in the parent component
   const callBackSet = (key, newVal) => {
@@ -83,13 +84,13 @@ const CreatePollCard = () => {
       {(fetchedLink != "") ? <div className={styles.linkOuterContainer}>
         <div className={styles.shareCopyButtonContainer}>
           <span>Shareable Link</span>
-          <CopyToClipboard text={fetchedLink}>
+          <CopyToClipboard text={`${hostURL}/p/${fetchedLink}`}>
             <button className={styles.copyBtn}>Copy</button>
           </CopyToClipboard>
           
         </div>
         
-        <div className={styles.linkInnerContainer}>{`localhost:3000/p/${fetchedLink}`}</div>
+        <div className={styles.linkInnerContainer}>{`${hostURL}/p/${fetchedLink}`}</div>
       </div> : <div></div>}
 
     </div>
