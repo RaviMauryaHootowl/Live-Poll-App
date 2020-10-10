@@ -78,10 +78,24 @@
 .pollStatus{
   display: flex;
   width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .totalVoteCount{
   color: #313131;
+}
+
+.refreshBtn{
+  cursor: pointer;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background-color: #1ECE30;
+  color: white;
+  border-radius: 2px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
 }
 
 .optionBarFill{

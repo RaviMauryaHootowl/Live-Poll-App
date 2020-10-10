@@ -6,6 +6,7 @@ const ViewPoll = () => {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isPollRefreshLoading, setIsPollRefreshLoading] = useState<boolean>(false);
   const [isVoting, setIsVoting] = useState<boolean>(false);
   const { pollid } = router.query;
   const [isVoted, setIsVoted] = useState<boolean>(false);
@@ -34,28 +35,39 @@ const ViewPoll = () => {
     })
   }
 
+  const refreshVotes = () => {
+    if(pollid){
+      setIsPollRefreshLoading(true);
+      fetchPollData();
+    }
+  }
+
   useEffect(() => {
     if(pollid){
-      setIsLoading(true);
-      console.log(pollid);
-      const requestOptions = {
-        method: 'GET'
-      };
-      fetch(`/api/getpoll?q=${pollid}`, requestOptions)
-      .then(res => res.json())
-      .then(data => {
-        setDataAfterFetch(data);
-        if(localStorage.getItem(`${pollid}`)){
-          setIsVoted(true);
-          setSelectedIndex(parseInt(localStorage.getItem(`${pollid}`)));
-        }
-        setIsLoading(false);
-      }).catch((error) => {
-        alert("This poll doesn't exists.");
-      })
+      fetchPollData();
     }
+    
   }, [pollid]);
 
+  const fetchPollData = () => {
+    const requestOptions = {
+      method: 'GET'
+    };
+    fetch(`/api/getpoll?q=${pollid}`, requestOptions)
+    .then(res => res.json())
+    .then(data => {
+      setDataAfterFetch(data);
+      if(localStorage.getItem(`${pollid}`)){
+        setIsVoted(true);
+        setSelectedIndex(parseInt(localStorage.getItem(`${pollid}`)));
+      }
+      setIsLoading(false);
+      setIsPollRefreshLoading(false);
+    }).catch((error) => {
+      alert("This poll doesn't exists.");
+    })
+    
+  }
 
   const setDataAfterFetch = (data) => {
     console.log(data);
@@ -97,6 +109,12 @@ const ViewPoll = () => {
             </div> */}
             <div className={styles.pollStatus}>
               <span className={styles.totalVoteCount}>Total {totalVote} votes</span>
+              <button onClick={refreshVotes} className={styles.refreshBtn}>
+                {(isPollRefreshLoading) ? 
+                  Loader(20, 3, "#ffffff")
+                  : 'Refresh'
+                }
+              </button>
             </div>
           </div>
            : <div className={styles.spinnerContainer}>
