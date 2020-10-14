@@ -57,6 +57,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
+
 .cardOption{
   width: 100%;
   display: flex;
@@ -79,6 +80,9 @@
 
 .cardOptionContainer{
   flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .cardOptionInput{
@@ -89,6 +93,26 @@
   border: none;
   background-color: #EEEEEE;
   font-family: 'Poppins', sans-serif;
+}
+
+.cardOptionDeleteBtn{
+  cursor: pointer;
+  outline: none;
+  border: none;
+  height: 25px;
+  width: 25px;
+  margin: 0 5px;
+  border-radius: 50vh;
+  background-color: #f36666;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardOptionDeleteBtn:hover{
+  transform: scale(1.1);
+  transition: transform 0.5s ease;
 }
 
 .createPollActions{

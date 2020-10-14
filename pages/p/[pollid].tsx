@@ -103,10 +103,7 @@ const ViewPoll = () => {
                 return <OptionBarView key={index} index={index} selectedIndex={selectedIndex} optionName={options[index]} isVoted={isVoted} setVote={setVote} isVoting={isVoting} tappedIndex={tappedIndex}/>
               })
             }
-            {/* <div className={styles.createPollActions}>
-              <div onClick={addOptionBtn} className={styles.optionAddBtn}>+</div>
-              <button onClick={createPoll} className={styles.createBtn}>Create</button>
-            </div> */}
+            
             <div className={styles.pollStatus}>
               <span className={styles.totalVoteCount}>Total {totalVote} votes</span>
               <button onClick={refreshVotes} className={styles.refreshBtn}>

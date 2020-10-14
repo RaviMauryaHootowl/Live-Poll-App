@@ -2,6 +2,7 @@ import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import styles from '../../styles/CreatePollCard.module.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import DeleteIcon from '@material-ui/icons/Clear';
 
 const CreatePollCard = () => {
   const [question, setQuestion] = useState<string> ("");
@@ -17,12 +18,25 @@ const CreatePollCard = () => {
     setOptions(oldArr);
   }
 
+  const callBackDelete = (optionDeleteIndex) => {
+    let tempOptionsList = [...options];
+    tempOptionsList.splice(optionDeleteIndex, 1);
+    console.log(options);
+    
+    setOptions(tempOptionsList);
+    console.log(tempOptionsList);
+  }
+
   const addOptionBtn = () => {
     setOptions(options => [...options, ""]);
   }
 
   const createPoll = () => {
     if(isCreating) return;
+    if(options.length<2){
+      alert("There should be atleast 2 options.");
+      return;
+    }
     setIsCreating(true);
     let formattedOptions = {};
     options.map((_, index) => {
@@ -61,7 +75,7 @@ const CreatePollCard = () => {
 
         {
           options.map((_, index) => {
-            return <OptionBar key={index} index={index} callBackSet={callBackSet} />
+            return <OptionBar key={index} index={index} optionsList={options} callBackSet={callBackSet} callBackDelete={callBackDelete} />
           })
         }
         <div className={styles.createPollActions}>
@@ -98,7 +112,7 @@ const CreatePollCard = () => {
   );
 }
 
-const OptionBar = ({callBackSet, index}) => {
+const OptionBar = ({callBackSet, index, optionsList, callBackDelete}) => {
   const [optionVal, setOptionVal] = useState<string>("");
 
   useEffect(()=>{
@@ -110,10 +124,14 @@ const OptionBar = ({callBackSet, index}) => {
       <div className={styles.cardOption}>
         <div className={styles.optionCircle}></div>
         <div className={styles.cardOptionContainer}>
-          <input value={optionVal} onChange={(e) => {
+          <input onChange={(e) => {
             setOptionVal(e.target.value);
-          }} className={styles.cardOptionInput} placeholder={`Option ${index + 1}`} type="text" name="option" id=""/>
+          }} value={optionsList[index]} className={styles.cardOptionInput} placeholder={`Option ${index + 1}`} type="text" name="option" id=""/>
+          
         </div>
+        <button tabIndex={-1} onClick={()=>{callBackDelete(index)}} className={styles.cardOptionDeleteBtn}>
+            <DeleteIcon style={{fontSize: 18}}/>
+          </button>
       </div>
     
   );
