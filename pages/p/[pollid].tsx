@@ -25,7 +25,16 @@ const ViewPoll = () => {
     };
     const res = await fetch('https://ipapi.co/json/', requestOptions)
     const data = await res.json();
-    ipAddress = data.ip;
+    console.log(data);
+    const ipversion = data.version;
+    const localip = data.ip;
+    console.log(ipversion);
+    console.log(localip);
+    if(ipversion == "IPv6"){
+      ipAddress = localip.split(":").slice(0,4).join(":")
+    }else{
+      ipAddress = localip;
+    }
   }
 
   const setVote = async (voteIndex) => {
@@ -43,7 +52,6 @@ const ViewPoll = () => {
       setIsVoted(true);
       setSelectedIndex(voteIndex);
       setDataAfterFetch(data);
-      localStorage.setItem(`${pollid}`, voteIndex);
       setIsVoting(false);
     })
   }
@@ -89,8 +97,7 @@ const ViewPoll = () => {
     for(let i = 0; i < Object.keys(allOptionsObject).length; i++){
       allOptionsArray.push(allOptionsObject[`${i+1}`]);
       totalVotes += Object.keys(allOptionsObject[`${i+1}`]['votings']).length;
-      console.log(ipAddress)
-      if(allOptionsObject[`${i+1}`]['votings'][`${ipAddress}`] != null){
+      if(`${ipAddress}` in allOptionsObject[`${i+1}`]['votings']){
         setIsVoted(true);
         setSelectedIndex(i);
       }
@@ -98,7 +105,7 @@ const ViewPoll = () => {
     setTotalVote(totalVotes);
     for(let i = 0; i < allOptionsArray.length; i++){
       allOptionsArray[i]['percent'] = (Object.keys(allOptionsArray[i]['votings']).length / totalVotes * 100);
-      console.log(allOptionsArray[i]['percent']);
+      //console.log(allOptionsArray[i]['percent']);
     }
     setOptions(allOptionsArray);
   }
