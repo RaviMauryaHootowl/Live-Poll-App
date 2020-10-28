@@ -31,9 +31,9 @@ const ViewPoll = () => {
     console.log(ipversion);
     console.log(localip);
     if(ipversion == "IPv6"){
-      ipAddress = localip.split(":").slice(0,4).join(":")
+      ipAddress = localip.split(":").slice(0,4).join(":");
     }else{
-      ipAddress = localip;
+      ipAddress = localip.split(".").join(":");
     }
   }
 
