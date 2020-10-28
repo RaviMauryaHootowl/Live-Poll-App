@@ -7,14 +7,21 @@ export default async (req : NextApiRequest, res : NextApiResponse) => {
   
   const pollid = req.query['q'];
   const optionNumber = req.query['option'];
-  const optionQuery = `options.${optionNumber}.votings`;
+  const clientip = `${req.query['ip']}`;
+  const optionQuery = `options.${optionNumber}.votings.${clientip}`;
   console.log(pollid);
   
   
+  // await db.collection("polls").updateOne(
+  //   {_id : new ObjectID(pollid.toString())},
+  //   {$push : {[optionQuery] : {"a": "a"}}}
+  // );
   await db.collection("polls").updateOne(
     {_id : new ObjectID(pollid.toString())},
-    {$push : {[optionQuery] : {"a": "a"}}}
-  );
+    {
+      $set : {[optionQuery] : "a"}
+    }
+  )
 
   const poll = await db.collection("polls").findOne({_id : new ObjectID(pollid.toString())});
   res.json(poll);

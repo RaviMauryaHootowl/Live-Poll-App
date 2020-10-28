@@ -42,7 +42,7 @@ const CreatePollCard = () => {
     options.map((_, index) => {
       formattedOptions[`${index+1}`] = {
         optionName : options[index],
-        votings: []
+        votings: {}
       };
     })
     let poll = {

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 const ViewPoll = () => {
   const router = useRouter();
 
+  let ipAddress = "";
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isPollRefreshLoading, setIsPollRefreshLoading] = useState<boolean>(false);
   const [isVoting, setIsVoting] = useState<boolean>(false);
@@ -18,13 +19,25 @@ const ViewPoll = () => {
   const [totalVote, setTotalVote] = useState<number>(0);
 
 
-  const setVote = (voteIndex) => {
+  const getIP = async ()  => {
+    const requestOptions = {
+      method: 'GET'
+    };
+    const res = await fetch('https://ipapi.co/json/', requestOptions)
+    const data = await res.json();
+    ipAddress = data.ip;
+  }
+
+  const setVote = async (voteIndex) => {
     setTappedIndex(voteIndex);
     setIsVoting(true);
     const requestOptions = {
       method: 'GET'
     };
-    fetch(`/api/addvote?q=${pollid}&option=${voteIndex+1}`, requestOptions)
+    if(ipAddress == ""){
+      await getIP();
+    }
+    fetch(`/api/addvote?q=${pollid}&option=${voteIndex+1}&ip=${ipAddress}`, requestOptions)
     .then(res => res.json())
     .then(data => {
       setIsVoted(true);
@@ -49,18 +62,16 @@ const ViewPoll = () => {
     
   }, [pollid]);
 
-  const fetchPollData = () => {
+  const fetchPollData = async () => {
     const requestOptions = {
       method: 'GET'
     };
+    await getIP();
     fetch(`/api/getpoll?q=${pollid}`, requestOptions)
     .then(res => res.json())
     .then(data => {
+
       setDataAfterFetch(data);
-      if(localStorage.getItem(`${pollid}`)){
-        setIsVoted(true);
-        setSelectedIndex(parseInt(localStorage.getItem(`${pollid}`)));
-      }
       setIsLoading(false);
       setIsPollRefreshLoading(false);
     }).catch((error) => {
@@ -77,11 +88,16 @@ const ViewPoll = () => {
     let totalVotes = 0;
     for(let i = 0; i < Object.keys(allOptionsObject).length; i++){
       allOptionsArray.push(allOptionsObject[`${i+1}`]);
-      totalVotes += allOptionsObject[`${i+1}`]['votings'].length;
+      totalVotes += Object.keys(allOptionsObject[`${i+1}`]['votings']).length;
+      console.log(ipAddress)
+      if(allOptionsObject[`${i+1}`]['votings'][`${ipAddress}`] != null){
+        setIsVoted(true);
+        setSelectedIndex(i);
+      }
     }
     setTotalVote(totalVotes);
     for(let i = 0; i < allOptionsArray.length; i++){
-      allOptionsArray[i]['percent'] = (allOptionsArray[i]['votings'].length / totalVotes * 100);
+      allOptionsArray[i]['percent'] = (Object.keys(allOptionsArray[i]['votings']).length / totalVotes * 100);
       console.log(allOptionsArray[i]['percent']);
     }
     setOptions(allOptionsArray);
@@ -138,7 +154,7 @@ const OptionBarView = ({optionName, index, selectedIndex,  isVoted, setVote, isV
       );
     }
     if(isVoted){
-      return (<span className={styles.optionVotesCountText}>{optionName['votings'].length}</span>);
+      return (<span className={styles.optionVotesCountText}>{Object.keys(optionName['votings']).length}</span>);
     }else{
       return (<span>?</span>);
     }
